@@ -101,7 +101,7 @@ body {
     height: 7px;
     display: block;
     position: absolute;
-    top: 3px;
+    top: 5px;
     right: 5px;
     background: lighten(black, 60%);
     border-radius: 50%;
@@ -136,6 +136,10 @@ body {
   position: absolute;
   right: 107px;
   bottom: 0;
+}
+
+.functional {
+  font-size: 13px;
 }
 
 
