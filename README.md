@@ -1,1 +1,2 @@
-# codejam-virtual-keyboard
+# virtual-keyboard
+Virtual keyboard using CoreJS

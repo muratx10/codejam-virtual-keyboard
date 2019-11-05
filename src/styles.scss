@@ -1,0 +1,142 @@
+@import 'variables';
+body {
+	margin: 0;
+	padding: 5px;
+}
+.root {
+	display: grid;
+	grid: 1fr / 1fr;
+	grid-row-gap: 20px;
+}
+#textInput {
+	margin: 0 auto;
+	outline: none;
+	border: 1px solid #14D2F4;
+	border-radius: 10px;
+	width: 90%;
+	max-width: 500px;
+  resize: none;
+  font-size: 24px;
+  padding: 15px;
+  color: #272821;
+}
+
+
+.keyboardContainer {
+	margin: 0 auto;
+	border-radius: 10px;
+  background: lighten(#000, 60%);
+	padding: 10px;
+	width: 95%;
+	min-width: 320px;
+  max-width: 980px;
+  display: grid;
+  user-select: none;
+  position: relative;
+  .keyboardContainer__keys {
+    transform: translateX(20px);
+  }
+}
+.keyboardContainer__key {
+	margin: 4px 2px;
+	border: 1px solid black;
+	border-radius: 5px;
+  @include gradientBg(#0e0e0e, #404040);
+	cursor: pointer;
+	padding: 0;
+  //width: 4.6%;
+  width: 6.4%;
+	height: 45px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 18px;
+  color: #ffffff;
+  @include shadow;
+  transition: 0.1s;
+  display: inline-flex;
+  flex-grow: 3;
+  vertical-align: top;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.keyboardContainer__key:hover {
+  @include gradientBg(lighten(#0e0e0e, 10%), lighten(#404040, 10%));
+}
+
+.keyboardContainer__key:focus {
+  outline: none;
+}
+
+.keyboardContainer__key:active {
+  @include gradientBg(lighten(#0e0e0e, 40%), lighten(#404040, 40%));
+  border: 1px solid #ffffff;
+  transition: 100ms;
+}
+
+.keyboardContainer__key-wide {
+  width: 10%;
+}
+
+.keyboardContainer__key-semiWide {
+  width: 8%;
+}
+
+.active {
+  @include gradientBg(lighten(#0e0e0e, 40%), lighten(#404040, 40%));
+  border: 1px solid #ffffff;
+  transition: 100ms;
+}
+
+.keyboardContainer__key-cmd {
+  width: 7% !important;
+}
+#capsLock {
+  position: relative;
+  &:after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    display: block;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    background: lighten(black, 60%);
+    border-radius: 50%;
+  }
+}
+
+.capsLock-active:after {
+  background: lighten(green, 30%) !important;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+  box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+}
+
+.keyboardContainer__shiftKey {
+  width: 13.4%;
+}
+
+.keyboardContainer__key-extraWide {
+  width: 35%;
+}
+
+[data-btn-type="arrow"] {
+  height: calc(42px / 2);
+  vertical-align: bottom;
+}
+
+#upArr {
+  vertical-align: top;
+}
+
+#downArr {
+  position: absolute;
+  right: 107px;
+  bottom: 0;
+}
+
+
+
