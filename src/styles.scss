@@ -22,7 +22,6 @@ body {
   background: lighten($mainColor, 30%);
 }
 
-
 .keyboardContainer {
 	margin: 0 auto;
 	border-radius: 10px;
@@ -45,7 +44,6 @@ body {
   @include gradientBg(#0e0e0e, #404040);
 	cursor: pointer;
 	padding: 0;
-  //width: 4.6%;
   width: 6.4%;
 	height: 45px;
 	text-align: center;
@@ -61,6 +59,7 @@ body {
   align-items: center;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
 }
 
 .keyboardContainer__key:hover {
@@ -127,6 +126,22 @@ body {
 [data-btn-type="arrow"] {
   height: calc(42px / 2);
   vertical-align: bottom;
+}
+
+.label {
+  display: block;
+  position: absolute;
+  top: -145px;
+  right: 13px;
+  color: $textColor;
+  width: 50px;
+  height: 50px;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  border-radius: 5px;
+  border: 1px $textColor solid;
+  text-align: center;
+  line-height: 50px;
 }
 
 #upArr {

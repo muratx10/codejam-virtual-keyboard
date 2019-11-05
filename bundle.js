@@ -107,7 +107,7 @@ const createTextarea = () => {
   element.setAttribute('cols', '100');
   element.setAttribute('rows', '5');
   element.setAttribute('resize', 'false');
-  element.value = 'Type some text';
+  element.placeholder = 'Type some text';
   element.id = 'textInput';
   root.appendChild(element);
 };
@@ -128,8 +128,7 @@ const Keyboard = {
   },
   currentState: {
     value: textValue.value,
-    layoutLang: 'en',
-    // en, ru
+    caretPosition: 0,
     capsLock: false,
     shiftKey: false,
     altKey: false,
@@ -143,14 +142,27 @@ const Keyboard = {
     this.layout.mainContainer.classList.add('keyboardContainer');
     this.layout.keysContainer.classList.add('keyboardContainer__keys');
     this.layout.mainContainer.appendChild(this.layout.keysContainer);
-    root.appendChild(this.layout.mainContainer);
-    this.layout.keysContainer.appendChild(this.createKeys());
+    root.appendChild(this.layout.mainContainer); // Check localStorage if there is saved last layout language
+
+    switch (this.currentState.layoutLang) {
+      case 'ru':
+        this.layout.keysContainer.appendChild(this.createKeys(this.keysArray.rus));
+        break;
+
+      default:
+        this.layout.keysContainer.appendChild(this.createKeys(this.keysArray.english));
+    }
+
     this.layout.keys = this.layout.keysContainer.querySelectorAll('.keyboardContainer__key');
+    const label = document.createElement('span');
+    label.classList.add('label');
+    label.textContent = this.currentState.layoutLang.toUpperCase();
+    this.layout.keysContainer.appendChild(label);
   },
 
-  createKeys() {
+  createKeys(langArray) {
     const keys = document.createDocumentFragment();
-    this.keysArray.english.forEach(key => {
+    langArray.forEach(key => {
       const btn = document.createElement('button');
       const lineBreak = ['backspace', '\\', 'enter', 'shiftR'].indexOf(key) !== -1; // if the key is one of this, create <br> tag
 
@@ -172,6 +184,7 @@ const Keyboard = {
           btn.innerHTML = '\u232b';
           btn.addEventListener('click', () => {
             deleteChar();
+            this.focusOn(); // eslint-disable-next-line max-len
 
             if (this.currentState.altKey) {
               // if ALT key is active, turn off when clicking BACKSPACE
@@ -196,6 +209,7 @@ const Keyboard = {
           btn.innerHTML = 'enter &#8629;';
           btn.addEventListener('click', () => {
             this.currentState.value += '\n';
+            this.focusOn();
 
             if (this.currentState.altKey) {
               this.altKeyToggle();
@@ -210,6 +224,7 @@ const Keyboard = {
           btn.innerHTML = 'caps lock';
           btn.addEventListener('click', () => {
             this.capsLockToggle();
+            this.focusOn();
           });
           break;
         // TAB button
@@ -219,6 +234,7 @@ const Keyboard = {
           btn.innerHTML = 'tab &RightArrowBar;';
           btn.addEventListener('click', () => {
             this.currentState.value += '    ';
+            this.focusOn();
 
             if (this.currentState.altKey) {
               this.altKeyToggle();
@@ -230,17 +246,20 @@ const Keyboard = {
         case 'ctrl':
           btn.classList.add('keyboardContainer__key', 'keyboardContainer__key-wide', 'functional');
           btn.innerHTML = 'ctrl';
+          this.focusOn();
           break;
         // COMMAND button
 
         case 'commandL':
           btn.classList.add('keyboardContainer__key', 'keyboardContainer__key-cmd', 'functional');
           btn.innerHTML = '&#8984;&nbsp; cmd';
+          this.focusOn();
           break;
 
         case 'commandR':
           btn.classList.add('keyboardContainer__key', 'keyboardContainer__key-cmd', 'functional');
           btn.innerHTML = '&#8984;&nbsp; cmd';
+          this.focusOn();
           break;
         // LEFT SHIFT button
 
@@ -276,12 +295,15 @@ const Keyboard = {
 
         case 'space':
           btn.classList.add('keyboardContainer__key', 'keyboardContainer__key-extraWide');
+          btn.dataset.btnType = 'space';
           btn.addEventListener('click', () => {
             this.currentState.value += ' ';
 
             if (this.currentState.altKey) {
               this.altKeyToggle();
             }
+
+            this.focusOn();
           });
           break;
         // ARROW buttons
@@ -290,12 +312,17 @@ const Keyboard = {
           btn.classList.add('keyboardContainer__key');
           btn.innerHTML = '&#9664;';
           btn.dataset.btnType = 'arrow';
+          btn.id = 'leftArr';
+          btn.addEventListener('click', () => {
+            this.setCaret();
+          });
           break;
 
         case 'rightArr':
           btn.classList.add('keyboardContainer__key');
           btn.innerHTML = '&#9654;';
           btn.dataset.btnType = 'arrow';
+          btn.id = 'rightArr';
           break;
 
         case 'upArr':
@@ -362,15 +389,19 @@ const Keyboard = {
       if (this.currentState.shiftKey && key.dataset.btnType === 'symbol') {
         // eslint-disable-next-line no-param-reassign
         if (this.currentState.layoutLang === 'ru') {
+          // eslint-disable-next-line no-param-reassign
           key.textContent = this.keysArray.rus__shift[index];
         } else if (this.currentState.layoutLang === 'en') {
+          // eslint-disable-next-line no-param-reassign
           key.textContent = this.keysArray.english__shift[index];
         }
       } else if (!this.currentState.shiftKey && key.dataset.btnType === 'symbol') {
         // eslint-disable-next-line no-param-reassign
         if (this.currentState.layoutLang === 'ru') {
+          // eslint-disable-next-line no-param-reassign
           key.textContent = this.keysArray.rus[index];
         } else if (this.currentState.layoutLang === 'en') {
+          // eslint-disable-next-line no-param-reassign
           key.textContent = this.keysArray.english[index];
         }
       }
@@ -378,6 +409,8 @@ const Keyboard = {
       if (this.currentState.altKey && !this.currentState.shiftKey) {
         this.altKeyToggle();
       }
+
+      this.focusOn();
     });
   },
 
@@ -385,12 +418,12 @@ const Keyboard = {
     if (this.currentState.layoutLang === 'en') {
       this.currentState.layoutLang = 'ru';
       this.shiftKeyToggle();
-      console.log('change to RUS');
     } else {
       this.currentState.layoutLang = 'en';
       this.shiftKeyToggle();
-      console.log('change to ENG');
     }
+
+    this.langLabel();
   },
 
   altKeyToggle() {
@@ -411,11 +444,10 @@ const Keyboard = {
     keys.forEach(key => {
       key.addEventListener('click', () => {
         // eslint-disable-next-line max-len
-        this.currentState.value += this.currentState.capsLock || this.currentState.shiftKey ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+        this.currentState.value += this.currentState.capsLock || this.currentState.shiftKey ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase(); // eslint-disable-next-line max-len
 
         if (this.currentState.shiftKey === true) {
           // if SHIFT is active, get UPPERCASE symbol & turn it off after input
-          this.currentState.shiftKey = false;
           this.shiftKeyToggle();
         }
 
@@ -424,6 +456,8 @@ const Keyboard = {
         }
 
         textValue.value = this.currentState.value;
+        this.currentState.caretPosition += 1;
+        this.focusOn();
       });
     });
   },
@@ -432,15 +466,46 @@ const Keyboard = {
     textValue.addEventListener('input', () => {
       this.currentState.value = textValue.value;
     });
+  },
+
+  focusOn() {
+    const pos = this.currentState.value.length;
+    textValue.setSelectionRange(pos, pos);
+    textValue.focus();
+  },
+
+  langLabel() {
+    const label = document.querySelector('.label');
+    label.textContent = this.currentState.layoutLang.toUpperCase();
+  },
+
+  setLang() {
+    let lang = localStorage.getItem('Keyboard__props');
+
+    if (lang) {
+      this.currentState.layoutLang = JSON.parse(lang);
+    }
+
+    return 'en';
   }
 
 };
 window.addEventListener('DOMContentLoaded', () => {
+  Keyboard.setLang();
   Keyboard.init();
   Keyboard.textAreaInput();
+  Keyboard.focusOn();
   Keyboard.inputValue();
+  console.log(localStorage.getItem('Keyboard__props'));
 });
-const codeArr = [['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'Space']];
+window.addEventListener('unload', () => {
+  localStorage.setItem('Keyboard__props', JSON.stringify(Keyboard.currentState.layoutLang));
+}); // const codeArr = [
+//   ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal',
+//     'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash',
+//     'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
+//     'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'Space'],
+// ];
 
 /***/ }),
 
