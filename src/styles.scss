@@ -1,7 +1,7 @@
 @import 'variables';
 body {
 	margin: 0;
-	padding: 5px;
+	padding: 20px;
 }
 .root {
 	display: grid;
@@ -11,21 +11,22 @@ body {
 #textInput {
 	margin: 0 auto;
 	outline: none;
-	border: 1px solid #14D2F4;
+  border: 1px solid $mainColor;
 	border-radius: 10px;
 	width: 90%;
 	max-width: 500px;
   resize: none;
   font-size: 24px;
   padding: 15px;
-  color: #272821;
+  color: $textColor;
+  background: lighten($mainColor, 30%);
 }
 
 
 .keyboardContainer {
 	margin: 0 auto;
 	border-radius: 10px;
-  background: lighten(#000, 60%);
+  background: $mainColor;
 	padding: 10px;
 	width: 95%;
 	min-width: 320px;
@@ -103,7 +104,7 @@ body {
     position: absolute;
     top: 5px;
     right: 5px;
-    background: lighten(black, 60%);
+    background: $mainColor;
     border-radius: 50%;
   }
 }
