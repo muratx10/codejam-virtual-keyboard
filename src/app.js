@@ -57,6 +57,7 @@ const Keyboard = {
   },
   currentState: {
     value: textValue.value,
+    layoutLang: 'en',
     caretPosition: 0,
     capsLock: false,
     shiftKey: false,
@@ -83,8 +84,8 @@ const Keyboard = {
 
     const label = document.createElement('span');
     label.classList.add('label');
-    label.textContent = this.currentState.layoutLang.toUpperCase();
     this.layout.keysContainer.appendChild(label);
+    label.textContent = this.currentState.layoutLang.toUpperCase();
   },
   createKeys(langArray) {
     const keys = document.createDocumentFragment();
@@ -315,6 +316,7 @@ const Keyboard = {
       this.shiftKeyToggle();
     }
     this.langLabel();
+    console.log(this.currentState.layoutLang);
   },
   altKeyToggle() {
     const alt = document.querySelectorAll('[data-btn-type="alt"]');
@@ -374,7 +376,6 @@ window.addEventListener('DOMContentLoaded', () => {
   Keyboard.textAreaInput();
   Keyboard.focusOn();
   Keyboard.inputValue();
-  console.log(localStorage.getItem('Keyboard__props'));
 });
 
 window.addEventListener('unload', () => {
