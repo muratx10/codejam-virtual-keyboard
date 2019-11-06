@@ -7,19 +7,26 @@ import './styles.scss';
 
 const root = document.querySelector('.root');
 
-// Create textarea for keyboard input
-const createTextarea = () => {
-  const element = document.createElement('textarea');
-  element.setAttribute('name', 'keyboard');
-  element.setAttribute('cols', '100');
-  element.setAttribute('rows', '5');
-  element.setAttribute('resize', 'false');
-  element.placeholder = 'Type some text';
-  element.id = 'textInput';
-  root.appendChild(element);
-};
+// Create block for features
+const block = document.createElement('div');
+block.classList.add('features');
+block.innerHTML = `
+<ul>
+<li>Hold BACKSPACE key with mouse to delete characters continuously</li>
+<li>Input characters from physical keyboard are typed in language of virtual keyboard instead system language</li>
+<li>Arrow keys for now are not working</li>
+</ul>`;
+root.appendChild(block);
 
-createTextarea();
+// Create textarea for keyboard input
+const element = document.createElement('textarea');
+element.setAttribute('name', 'keyboard');
+element.setAttribute('cols', '100');
+element.setAttribute('rows', '5');
+element.setAttribute('resize', 'false');
+element.placeholder = 'Type some text';
+element.id = 'textInput';
+root.appendChild(element);
 const textValue = document.getElementById('textInput');
 const Keyboard = {
   layout: {

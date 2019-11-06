@@ -80,6 +80,8 @@ body {
   @include gradientBg(lighten(#0E0E0E, 40%), lighten(#404040, 40%));
   transition: 100ms;
   border: 1px solid #FFFFFF;
+  transform: scale(0.9);
+  z-index: 99;
 }
 
 .keyboardContainer__key-wide {
@@ -94,10 +96,12 @@ body {
   @include gradientBg(lighten(#0E0E0E, 40%), lighten(#404040, 40%));
   transition: 100ms;
   border: 1px solid #FFFFFF;
+  transform: scale(0.9);
+  z-index: 99;
 }
 
-.keyboardContainer__key-cmd {
-  width: 7% !important;
+:root .keyboardContainer__key-cmd {
+  width: 7%;
 }
 
 #capsLock {
@@ -114,13 +118,6 @@ body {
     border-radius: 50%;
     background: $mainColor;
   }
-}
-
-.capsLock-active:after {
-  background: lighten(green, 30%) !important;
-  -moz-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
-  -webkit-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
-  box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
 }
 
 .keyboardContainer__shiftKey {
@@ -181,6 +178,24 @@ body {
 
 .functional {
   font-size: 13px;
+}
+
+.capsLock-active:after {
+  background: lighten(green, 30%) !important;
+  -moz-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+  box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+}
+
+.features {
+  position: absolute;
+  width: 800px;
+  font-family: Arial, sans-serif;
+  color: $textColor;
+  line-height: 30px;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 
