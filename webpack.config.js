@@ -81,7 +81,6 @@ const conf = {
       minify: false,
     }),
   ],
-
 };
 
 module.exports = conf;

@@ -1,70 +1,75 @@
 @import 'variables';
+
 body {
-	margin: 0;
+  margin: 0;
   padding: 20px;
 }
+
 .root {
-	display: grid;
-	grid: 1fr / 1fr;
-	grid-row-gap: 20px;
+  display: grid;
+  grid: 1fr / 1fr;
+  grid-row-gap: 20px;
 }
+
 #textInput {
-	margin: 0 auto;
-	outline: none;
-  border: 1px solid $mainColor;
-	border-radius: 10px;
-	width: 90%;
-	max-width: 500px;
-  resize: none;
+  width: 90%;
+  max-width: 500px;
   font-family: Arial, sans-serif;
   font-size: 24px;
+  margin: 0 auto;
   padding: 15px;
+  resize: none;
   color: $textColor;
+  border: 1px solid $mainColor;
+  border-radius: 10px;
+  outline: none;
   background: lighten($mainColor, 30%);
 }
 
 .keyboardContainer {
-	margin: 0 auto;
-	border-radius: 10px;
-  background: $mainColor;
-	padding: 10px;
-	width: 95%;
-	min-width: 320px;
-  max-width: 980px;
   display: grid;
-  user-select: none;
+  width: 95%;
+  min-width: 320px;
+  max-width: 980px;
   position: relative;
+  margin: 0 auto;
+  padding: 10px;
+  user-select: none;
+  border-radius: 10px;
+  background: $mainColor;
+
   .keyboardContainer__keys {
     transform: translateX(20px);
   }
 }
+
 .keyboardContainer__key {
-	margin: 4px 2px;
-	border: 1px solid black;
-	border-radius: 5px;
-  @include gradientBg(#0e0e0e, #404040);
-	cursor: pointer;
-	padding: 0;
-  width: 6.4%;
-	height: 45px;
-	text-align: center;
-	line-height: 20px;
-	font-size: 18px;
-  color: #ffffff;
-  @include shadow;
-  transition: 0.1s;
   display: inline-flex;
   flex-grow: 3;
-  vertical-align: top;
   justify-content: center;
+  @include gradientBg(#0E0E0E, #404040);
   align-items: center;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+  width: 6.4%;
+  height: 45px;
+  font-size: 18px;
+  line-height: 20px;
   position: relative;
+  margin: 4px 2px;
+  padding: 0;
+  @include shadow;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.1s;
+  text-align: center;
+  vertical-align: top;
+  color: #FFFFFF;
+  border: 1px solid black;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .keyboardContainer__key:hover {
-  @include gradientBg(lighten(#0e0e0e, 10%), lighten(#404040, 10%));
+  @include gradientBg(lighten(#0E0E0E, 10%), lighten(#404040, 10%));
 }
 
 .keyboardContainer__key:focus {
@@ -72,9 +77,9 @@ body {
 }
 
 .keyboardContainer__key:active {
-  @include gradientBg(lighten(#0e0e0e, 40%), lighten(#404040, 40%));
-  border: 1px solid #ffffff;
+  @include gradientBg(lighten(#0E0E0E, 40%), lighten(#404040, 40%));
   transition: 100ms;
+  border: 1px solid #FFFFFF;
 }
 
 .keyboardContainer__key-wide {
@@ -86,33 +91,35 @@ body {
 }
 
 .active {
-  @include gradientBg(lighten(#0e0e0e, 40%), lighten(#404040, 40%));
-  border: 1px solid #ffffff;
+  @include gradientBg(lighten(#0E0E0E, 40%), lighten(#404040, 40%));
   transition: 100ms;
+  border: 1px solid #FFFFFF;
 }
 
 .keyboardContainer__key-cmd {
   width: 7% !important;
 }
+
 #capsLock {
   position: relative;
+
   &:after {
     content: '';
+    display: block;
     width: 7px;
     height: 7px;
-    display: block;
     position: absolute;
     top: 5px;
     right: 5px;
-    background: $mainColor;
     border-radius: 50%;
+    background: $mainColor;
   }
 }
 
 .capsLock-active:after {
   background: lighten(green, 30%) !important;
-  -webkit-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
   -moz-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
   box-shadow: 0px 0px 20px 0px rgba(26, 255, 26, 1);
 }
 
@@ -131,34 +138,34 @@ body {
 
 .label {
   display: block;
-  position: absolute;
-  top: -145px;
-  right: 13px;
-  color: $textColor;
   width: 50px;
   height: 50px;
   font-family: Arial, sans-serif;
   font-size: 22px;
-  border-radius: 5px;
-  border: 1px $textColor solid;
-  text-align: center;
   line-height: 50px;
+  position: absolute;
+  top: -145px;
+  right: 13px;
+  text-align: center;
+  color: $textColor;
+  border: 1px $textColor solid;
+  border-radius: 5px;
 }
 
 .tip {
   display: block;
-  font-family: Arial, sans-serif;
-  color: #ffffff;
   width: 250px;
   height: 19px;
+  font-family: Arial, sans-serif;
   line-height: 19px;
-  text-align: center;
-  border: 1px $textColor solid;
-  border-radius: 5px;
   position: absolute;
-  top: -31px; 
+  top: -31px;
   right: 0;
   transform: translateX(-154%);
+  text-align: center;
+  color: #FFFFFF;
+  border: 1px $textColor solid;
+  border-radius: 5px;
   background: $mainColor;
 }
 
