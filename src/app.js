@@ -83,8 +83,12 @@ const Keyboard = {
     this.layout.keys = this.layout.keysContainer.querySelectorAll('.keyboardContainer__key');
 
     const label = document.createElement('span');
+    const tip = document.createElement('span');
+    tip.classList.add('tip');
+    tip.innerHTML = 'Input source switch: <b>Shift + Alt</b>';
     label.classList.add('label');
     this.layout.keysContainer.appendChild(label);
+    this.layout.keysContainer.appendChild(tip);
     label.textContent = this.currentState.layoutLang.toUpperCase();
   },
   createKeys(langArray) {

@@ -1,7 +1,7 @@
 @import 'variables';
 body {
 	margin: 0;
-	padding: 20px;
+  padding: 20px;
 }
 .root {
 	display: grid;
@@ -16,6 +16,7 @@ body {
 	width: 90%;
 	max-width: 500px;
   resize: none;
+  font-family: Arial, sans-serif;
   font-size: 24px;
   padding: 15px;
   color: $textColor;
@@ -142,6 +143,23 @@ body {
   border: 1px $textColor solid;
   text-align: center;
   line-height: 50px;
+}
+
+.tip {
+  display: block;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  width: 250px;
+  height: 19px;
+  line-height: 19px;
+  text-align: center;
+  border: 1px $textColor solid;
+  border-radius: 5px;
+  position: absolute;
+  top: -31px; 
+  right: 0;
+  transform: translateX(-154%);
+  background: $mainColor;
 }
 
 #upArr {
